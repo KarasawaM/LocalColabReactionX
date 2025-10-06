@@ -81,6 +81,10 @@ def run(
         from localcolabreactionx.runners.neb_runner import run_neb
         logger.info("Running Nudged Elastic Band calculation...")
         run_neb(toml_path)
+    elif calc_type == "thermo" or calc_type == "vibration" or calc_type == "freq":
+        from localcolabreactionx.runners.thermo_runner import run_thermo
+        logger.info("Running Thermodynamic calculation...")
+        run_thermo(toml_path)
     else:
         logger.error(f"Unknown calculation type: {calc_type}")
         raise typer.Exit(code=1)

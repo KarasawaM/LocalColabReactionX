@@ -119,6 +119,7 @@ class ASEVibrationRunner(BaseVibrationRunner):
 
             # save Hessian
             H_2d = vdata.get_hessian_2d()
+            logger.debug(f"Hessian shape: {H_2d.shape}, atoms: {len(atoms)}")
             np.save(f"{outname}_hessian.npy", H_2d)
 
             # Extract and save imaginary modes
