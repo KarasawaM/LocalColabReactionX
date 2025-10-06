@@ -43,14 +43,28 @@ def _autograd_hessian(atoms, calc):
 
 
 def _vibrations_hessian(atoms):
-    vib = Vibrations(atoms, name="vib_tmp")
+    """
+    Compute a full 3N x 3N Cartesian Hessian by running ASE Vibrations
+    Constraints, especially FixAtoms, must be removed to obtain 3N x 3N Hessian.
+    """
+    atoms_copy = atoms.copy()
+
+    # share the same calculator
+    if atoms_copy.calc is None and atoms.calc is not None:
+        atoms_copy.calc = atoms.calc
+
+    # drop all constraints on the copy
+    atoms_copy.set_constraint([]) 
+
+    vib = Vibrations(atoms_copy, name="vib_tmp")
     vib.run()
     vibdata = vib.get_vibrations()
     H = vibdata.get_hessian_2d()
-    H = 0.5 * (H + H.T)
-    vib.clean()
-    return H
+    H = 0.5 * (H + H.T)  # enforce symmetry
     
+    vib.clean()  
+    return H
+
 
 def _get_initial_hessian(H0_type="autograd", atoms=None, calc=None):
     """
