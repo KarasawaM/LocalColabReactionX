@@ -38,14 +38,14 @@ def setup_logger(verbose: bool = False, quiet: bool = False):
                       )
 
     logger.add(sys.stderr, level=level, format=log_format)
-    logger.add("colabreaction_{time:YYYY-MM-DD}.log", level=level, format=log_format, rotation="10 MB")
+    logger.add("lcrx_{time:YYYY-MM-DD}.log", level=level, format=log_format, rotation="10 MB")
 
 
 def log_launch_info():
     """
     Log basic information.
     """
-    logger.info("LocalColabReaction: Starting calculation...")
+    logger.info("LocalColabReactionX: Starting calculation...")
     logger.info(f"Command line arguments: {sys.argv}")
 
 
