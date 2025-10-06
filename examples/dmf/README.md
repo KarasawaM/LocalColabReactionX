@@ -60,7 +60,7 @@ totalmem = 60           # in GB. total CPU memory to use.
 [calculation]
 type = "dmf"                # Direct MaxFlux calculation
 dmf_nmove = 5               # nmove for path optimization. default: 5.
-update_teval = ture         # or true. default: false
+update_teval = true         # or true. default: false
 dmf_convergence = "tight"   # or "middle", "loose". default: "tight"
 parallel = true             # Enable parallel execution across nmoves. CPU only, not available for GPU. default: false
 peak_vibration = "highest"  # subsequent vibrational analysis for: "highest" energy peak, "all" peaks, or "none". default: "highest"
