@@ -187,7 +187,7 @@ def run_ts(
 
     # write history
     traj = Trajectory(f"{history_prefix}.traj")
-    write(f"{history_prefix}.xyz", traj)    # write XYZ format for history
+    write(f"{history_prefix}.xyz", traj, plain=True)    # write XYZ format for history
     traj_to_csv(traj, out_csv_path=f"{history_prefix}.csv")
 
     # check convergence
