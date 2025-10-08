@@ -1,0 +1,20 @@
+# === ignore cache ===
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# === editor and IDE files ===
+*.swp
+*.swo
+*.tmp
+*.bak
+.vscode/
+
+# === build-related ===
+build/
+dist/
+*.egg-info/
+MANIFEST.in
+
+# === personal development directory ===
+tmp/

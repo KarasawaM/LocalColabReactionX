@@ -1,0 +1,36 @@
+[project]
+name = "lcrx"
+version = "0.1.0"
+description = "LCRX: LocalColabReaction eXtended"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+
+dependencies = [
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "pandas",
+    "plotly",
+    "ase",
+    "loguru",
+    "typer",
+    "fairchem-core",
+    "sella",
+    "direct-maxflux @ git+https://github.com/shin1koda/dmf.git"
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+lcrx = "localcolabreactionx.lcrx_cli:app"
+localcolabreaction = "localcolabreactionx.lcrx_cli:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = false 
+
+[tool.setuptools.packages.find]
+where = ["src"]
