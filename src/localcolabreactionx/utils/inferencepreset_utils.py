@@ -11,7 +11,6 @@ default:
         activation_checkpointing=True,
         merge_mole=False,
         compile=False,
-        wigner_cuda=False,
         external_graph_gen=False,
         internal_graph_gen_version=2,
     )
@@ -22,7 +21,6 @@ turbo: compile takes more time, but speeds up the inference.
         activation_checkpointing=True,
         merge_mole=True,
         compile=True,
-        wigner_cuda=True,
         external_graph_gen=False,
         internal_graph_gen_version=2,
     )
@@ -35,7 +33,6 @@ def inference_settings_dmf():
         activation_checkpointing=False,
         merge_mole=True,
         compile=False,
-        wigner_cuda=False,
         external_graph_gen=False,
         internal_graph_gen_version=2,
     )
@@ -47,7 +44,6 @@ def inference_settings_opt_scan():
         activation_checkpointing=False,
         merge_mole=True,
         compile=False,
-        wigner_cuda=False,
         external_graph_gen=False,
         internal_graph_gen_version=2,
     )
@@ -59,7 +55,6 @@ def inference_settings_ts():
         activation_checkpointing=False,
         merge_mole=True,
         compile=False,
-        wigner_cuda=False,
         external_graph_gen=False,
         internal_graph_gen_version=2,
     )
@@ -71,7 +66,6 @@ def inference_settings_minhop():
         activation_checkpointing=False,
         merge_mole=True,
         compile=True,
-        wigner_cuda=False,
         external_graph_gen=False,
         internal_graph_gen_version=2,
     )
@@ -83,7 +77,6 @@ def inference_settings_md():
         activation_checkpointing=False,
         merge_mole=True,
         compile=True,
-        wigner_cuda=False,
         external_graph_gen=False,
         internal_graph_gen_version=2,
     )
@@ -95,7 +88,6 @@ def inference_settings_md_large():
         activation_checkpointing=True,
         merge_mole=True,
         compile=True,
-        wigner_cuda=False,
         external_graph_gen=False,
         internal_graph_gen_version=2,
     )
@@ -107,7 +99,6 @@ def inference_settings_custom():
         activation_checkpointing=False,
         merge_mole=False,
         compile=False,
-        wigner_cuda=False,
         external_graph_gen=False,
         internal_graph_gen_version=2,
     )
