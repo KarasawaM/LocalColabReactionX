@@ -109,7 +109,7 @@ class ASEVibrationRunner(BaseVibrationRunner):
             os.chdir(f"{outname}_vib")
 
             # vibrational analysis
-            vib = Vibrations(atoms, name=f"{outname}_mode")
+            vib = Vibrations(atoms, name=f"{outname}_tmp")
             vib.run()
             vdata = vib.get_vibrations()
 
