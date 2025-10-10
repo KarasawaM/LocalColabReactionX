@@ -150,8 +150,6 @@ class ASEVibrationRunner(BaseVibrationRunner):
                 extra="opt=(calcfc,tight,ts,noeigentest) freq=(noraman) nosymm"
             )
 
-            vib.clean()  # remove temp files
-
         logger.info(f"[ASE] Vibrational analysis for {outname} terminated.")
 
 
