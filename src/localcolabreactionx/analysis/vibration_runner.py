@@ -109,9 +109,10 @@ class ASEVibrationRunner(BaseVibrationRunner):
             os.chdir(f"{outname}_vib")
 
             # vibrational analysis
-            vib = Vibrations(atoms, name=f"{outname}_tmp")
+            vib = Vibrations(atoms, name=f"{outname}_mode")
             vib.run()
             vdata = vib.get_vibrations()
+            vib.clean()  # remove temp files
 
             # Save table
             with open(f"{outname}_vib.txt", "w") as f:
@@ -149,8 +150,6 @@ class ASEVibrationRunner(BaseVibrationRunner):
                 charge=charge, mult=mult,
                 extra="opt=(calcfc,tight,ts,noeigentest) freq=(noraman) nosymm"
             )
-
-            vib.clean()  # remove temp files
 
         logger.info(f"[ASE] Vibrational analysis for {outname} terminated.")
 
