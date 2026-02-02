@@ -17,7 +17,7 @@ dependencies = [
     "typer",
     "fairchem-core",
     "sella",
-    "direct-maxflux @ git+https://github.com/shin1koda/dmf.git"
+    "pydmf"
 ]
 
 [build-system]
