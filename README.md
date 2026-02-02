@@ -24,15 +24,15 @@ We recommend creating a dedicated environment:
 ```sh
 lcrx_env_name="lcrx"  # conda env name
 conda create -n ${lcrx_env_name} -y -c conda-forge \
-  python=3.11 cyipopt tblite tblite-python && \
+  python=3.12 cyipopt tblite tblite-python && \
 conda activate ${lcrx_env_name}
 ```
 
 Then install **LCRX**:
 
 ```sh
-# After unzipping, move to the directory with pyproject.toml
-# Once released on GitHub/PyPI, you can install directly from the repo URL
+git clone https://github.com/KarasawaM/LocalColabReactionX.git
+cd LocalColabReactionX
 pip install .
 ```
 
