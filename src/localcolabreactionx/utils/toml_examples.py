@@ -234,7 +234,7 @@ def calculation_ts():
     [[calculation.irc]]         # Subsequent IRC calculation. Remove this block to skip.
     irc_fmax = 0.05             # maximum force for convergence criterion (eV angstrom^-1). default: 0.05
     irc_dx = 0.1                # in angstrom sqrt(amu). step size for IRC. default: 0.1
-    irc_steps = 100             # maximum number of IRC steps. default: 100
+    irc_steps = 50             # maximum number of IRC steps. default: 100
     endpoint_opt = "LBFGS"      # or "FIRE", "LBFGS", "BFGSLINESEARCH". Optimize the IRC endpoints.
                                 # fmax and maxstep settings are taken from the TS opt. false: skip endpoint optimization.
     ''')
@@ -247,14 +247,17 @@ def calculation_ts_verbose():
     fmax = 0.001                # maximum force for convergence criterion (eV angstrom^-1)
     maxstep = 1000              # maximum number of optimization steps
     internal = true             # or true. Use internal coordinates. default: true
-    initial_hess = "vib"        # initial hessian. "vib": ASE Vibrations. "sella": Sella's default estimate. "autograd": UMA only, but not available yet.
+    initial_hess = "autograd"   #  initial hessian. "vib": ASE Vibrations. "autograd": UMA only, autograd hessian. "sella": Sella's default estimate. 
                                 # or "/path/to/hessian.csv | .npy" hessian_2d() format.
-    update_hess = "vib"         # hessian update method. "vib": ASE Vibrations. "sella": Sella's default update. "autograd": UMA only, but not available yet.
+    update_hess = "autograd"    # hessian update method. "vib": ASE Vibrations. "autograd": UMA only, autograd hessian. "sella": Sella's default update. 
+    vmap = false                # vmap mode for autograd Hessian. UMA only. true is faster but more memory intensive. default: false
+    diag_every_n = None         # recalculate the hessian every n steps. default: None (recalculate if needed judged by Sella)
+    nsteps_per_diag = 3        # check the hessian quality every n steps. default: 3
 
     [[calculation.irc]]         # Subsequent IRC calculation. Remove this block to skip.
     irc_fmax = 0.05             # maximum force for convergence criterion (eV angstrom^-1). default: 0.05
     irc_dx = 0.1                # in angstrom sqrt(amu). step size for IRC. default: 0.1
-    irc_steps = 100             # maximum number of IRC steps. default: 100
+    irc_steps = 50             # maximum number of IRC steps. default: 100
     endpoint_opt = "LBFGS"      # or "FIRE", "LBFGS", "BFGSLINESEARCH". Optimize the IRC endpoints.
                                 # fmax and maxstep settings are taken from the TS opt. false: skip endpoint optimization.
     ''')
