@@ -22,13 +22,18 @@ Dependencies such as `cyipopt` and `tblite` are most easily installed using **co
 We recommend creating a dedicated environment:
 
 ```sh
-lcrx_env_name="lcrx"  # conda env name
-conda create -n ${lcrx_env_name} -y -c conda-forge \
+conda create -n lcrx -y -c conda-forge \
   python=3.12 cyipopt tblite tblite-python && \
-conda activate ${lcrx_env_name}
+conda activate lcrx
 ```
 
 Then install **LCRX**:
+
+```sh
+pip install git+https://github.com/KarasawaM/LocalColabReactionX.git
+```
+
+Alternatively, clone the repository and install it locally:
 
 ```sh
 git clone https://github.com/KarasawaM/LocalColabReactionX.git
@@ -126,7 +131,7 @@ mult = 1                    # multiplicity (2S+1)
 
 [calculator]
 type = "UMA"                # Universal Models for Atoms
-model_name = "uma-s-1p1"    # or "uma-m-1p1"
+model_name = "uma-s-1p2"    # or "uma-m-1p1"
 task = "omol"               # omol task for molecules.
 device = "gpu"              # or "cpu"
 
@@ -148,7 +153,7 @@ mult = 1                    # multiplicity (2S+1)
 
 [calculator]
 type = "UMA"                # Universal Models for Atoms
-model_name = "uma-s-1p1"    # or "uma-m-1p1"
+model_name = "uma-s-1p2"    # or "uma-m-1p1"
 task = "omol"               # omol task for molecules.
 device = "gpu"              # or "cpu"
 
