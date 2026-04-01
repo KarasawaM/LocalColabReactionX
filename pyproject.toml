@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "LCRX: LocalColabReaction eXtended"
 readme = "README.md"
 license = { text = "MIT" }
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 
 dependencies = [
     "numpy",
@@ -15,7 +15,7 @@ dependencies = [
     "ase",
     "loguru",
     "typer",
-    "fairchem-core",
+    "fairchem-core<=2.17",
     "sella",
     "pydmf"
 ]
