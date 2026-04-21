@@ -152,7 +152,7 @@ def _vibrations_hessian(atoms: Atoms) -> np.ndarray:
     return H
 
 
-def _get_initial_hessian(H0_type="autograd", atoms=None, calc=None, vmap=True):
+def _get_initial_hessian(H0_type="vib", atoms=None, calc=None, vmap=True):
     """
     Initialize Hessian for Sella TS optimization.
 
@@ -265,7 +265,7 @@ def run_ts(
     fmax = float(calcdata.get("fmax", 0.001))
     maxstep = int(calcdata.get("maxstep", 5000))
     internal = bool(calcdata.get("internal", True))
-    H0_type = str(calcdata.get("initial_hess", "autograd"))
+    H0_type = str(calcdata.get("initial_hess", "vib"))
     update_hess = str(calcdata.get("update_hess", "vib"))
     vmap = _to_bool(calcdata.get("vmap", "false"), default=False)
     diag_every_n = calcdata.get("diag_every_n", None)  # recalc hessian every n steps. Default: None
