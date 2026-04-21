@@ -30,7 +30,7 @@ def calculator_uma():
     return textwrap.dedent('''\
     [calculator]
     type = "UMA"                # Universal Models for Atoms
-    model_name = "uma-s-1p1"    # or "uma-m-1p1"
+    model_name = "uma-s-1p2"    # or "uma-s-1p1", "uma-m-1p1"
     task = "omol"               # omol task for molecules.
     device = "gpu"              # or "cpu"
     ''')
@@ -40,11 +40,11 @@ def calculator_uma_verbose():
     return textwrap.dedent('''\
     [calculator]
     type = "UMA"                    # Universal Models for Atoms
-    model_name = "uma-s-1p1"        # or "uma-m-1p1"
+    model_name = "uma-s-1p2"        # or "uma-s-1p1", "uma-m-1p1"
     task = "omol"                   # omol task for molecules.
     device = "gpu"                  # or "cpu"
     inference_preset = "auto"       # "turbo", "opt", "dmf", etc. "auto" for automatic selection from calculation type.
-    # model_path = "/path/to/uma-s-1p1.pt"  # optional, auto-download if omitted.
+    # model_path = "/path/to/uma-s-1p2.pt"  # optional, auto-download if omitted.
     ''')
 
 
@@ -189,7 +189,7 @@ def calculation_dmf_verbose():
     update_teval = false        # or true. default: false
     dmf_convergence = "tight"   # or "middle", "loose". default: "tight"
     parallel = false            # Enable parallel execution across nmoves. CPU only, not available for GPU. default: false
-    peak_vibration = "highest"  # subsequent vibrational analysis for: "highest" energy peak, "all" peaks, or "none". default: "highest"
+    peak_vibration = "all"      # subsequent vibrational analysis for: "highest" energy peak, "all" peaks, or "none". default: "highest"
     ''')
 
 
@@ -230,6 +230,7 @@ def calculation_ts():
     fmax = 0.001                # maximum force for convergence criterion (eV angstrom^-1)
     maxstep = 1000              # maximum number of optimization steps
     internal = true             # or true. Use internal coordinates. default: true
+    device = "cpu"              # device for Sella/JAX ("cpu" or "gpu")
 
     [[calculation.irc]]         # Subsequent IRC calculation. Remove this block to skip.
     irc_fmax = 0.05             # maximum force for convergence criterion (eV angstrom^-1). default: 0.05
@@ -247,12 +248,13 @@ def calculation_ts_verbose():
     fmax = 0.001                # maximum force for convergence criterion (eV angstrom^-1)
     maxstep = 1000              # maximum number of optimization steps
     internal = true             # or true. Use internal coordinates. default: true
-    initial_hess = "autograd"   #  initial hessian. "vib": ASE Vibrations. "autograd": UMA only, autograd hessian. "sella": Sella's default estimate. 
+    device = "cpu"              # device for Sella/JAX ("cpu" or "gpu")
+    initial_hess = "vib"        # initial hessian. "vib": ASE Vibrations. "autograd": UMA only, autograd hessian. "sella": Sella's default estimate. 
                                 # or "/path/to/hessian.csv | .npy" hessian_2d() format.
-    update_hess = "autograd"    # hessian update method. "vib": ASE Vibrations. "autograd": UMA only, autograd hessian. "sella": Sella's default update. 
+    update_hess = "vib"         # hessian update method. "vib": ASE Vibrations. "autograd": UMA only, autograd hessian. "sella": Sella's default update. 
     vmap = false                # vmap mode for autograd Hessian. UMA only. true is faster but more memory intensive. default: false
     diag_every_n = None         # recalculate the hessian every n steps. default: None (recalculate if needed judged by Sella)
-    nsteps_per_diag = 3        # check the hessian quality every n steps. default: 3
+    nsteps_per_diag = 3         # check the hessian quality every n steps. default: 3
 
     [[calculation.irc]]         # Subsequent IRC calculation. Remove this block to skip.
     irc_fmax = 0.05             # maximum force for convergence criterion (eV angstrom^-1). default: 0.05
