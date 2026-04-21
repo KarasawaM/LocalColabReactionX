@@ -40,7 +40,31 @@ def set_environment_variable(toml_data) -> None:
 
     # --- jax ---
     if calculation_data.get("type", "").lower() == "ts":
-        os.environ["JAX_PLATFORMS"] = "cpu"
+        calc_device = calculation_data.get("device", "cpu").lower()
 
+        if calc_device in {"gpu", "cuda", "GPU"}:
+            os.environ["JAX_PLATFORMS"] = "cuda"
+            os.environ["XLA_PYTHON_CLIENT_PREALLOCATE"] = "false"
+        else:
+            os.environ["JAX_PLATFORMS"] = "cpu"
 
+        import jax
 
+        backend = jax.default_backend()
+        devices = jax.devices()
+
+        logger.info(f"TS calculation requested device = {calc_device}")
+        logger.info(f"JAX_PLATFORMS = {os.environ.get('JAX_PLATFORMS')}")
+        logger.info(f"JAX default backend = {backend}")
+        logger.info(f"JAX visible devices = {devices}")
+
+        if calc_device in {"gpu", "cuda"}:
+            if backend == "gpu":
+                logger.info("JAX GPU backend is active.")
+            else:
+                logger.warning("GPU was requested, but JAX is not using GPU backend.")
+        else:
+            if backend == "cpu":
+                logger.info("JAX CPU backend is active.")
+            else:
+                logger.warning("CPU was requested, but JAX is not using CPU backend.")
