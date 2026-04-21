@@ -15,7 +15,7 @@ dependencies = [
     "ase",
     "loguru",
     "typer",
-    "fairchem-core<=2.17",
+    "fairchem-core",
     "sella",
     "pydmf"
 ]
