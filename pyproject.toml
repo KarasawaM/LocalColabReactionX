@@ -1,22 +1,23 @@
 [project]
 name = "lcrx"
-version = "0.1.0"
+version = "0.1.1"
 description = "LCRX: LocalColabReaction eXtended"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.11"
 
+# ase 3.28 causes unexpected error with sella
 dependencies = [
     "numpy",
     "scipy",
     "matplotlib",
     "pandas",
     "plotly",
-    "ase",
+    "ase<=3.27",
     "loguru",
     "typer",
-    "fairchem-core",
-    "sella",
+    "fairchem-core>=2.17",
+    "sella>=2.4.2",
     "pydmf"
 ]
 
