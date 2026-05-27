@@ -13,7 +13,6 @@ import ase.parallel
 from ase.io import write
 from loguru import logger
 from types import MethodType
-from dmf import DirectMaxFlux, interpolate_fbenm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ---- LocalColabReactionX modules ----
@@ -131,19 +130,34 @@ def _check_parallel(parallel: bool, world) -> None:
 
 
 # --- main DMF runner function ---
-def generate_initial_path(react, prod, correlated, nmove) -> np.ndarray:
+def generate_initial_path(react, prod, correlated, nmove, device) -> np.ndarray:
     ref_images = [react, prod]
-    mxflx_fbenm = interpolate_fbenm(ref_images, correlated=correlated, nmove=nmove)
+
+    if device.lower() in ["gpu", "cuda", "torch"]:
+        from dmf.torch import interpolate_fbenm
+        mxflx_fbenm = interpolate_fbenm(ref_images, correlated=correlated, nmove=nmove, device="cuda")
+    else:
+        from dmf import interpolate_fbenm
+        mxflx_fbenm = interpolate_fbenm(ref_images, correlated=correlated, nmove=nmove)
+
     write("DMF_init.traj", mxflx_fbenm.images)
     write("DMF_init.xyz", mxflx_fbenm.images)
     np.save("DMF_init_coefs.npy", mxflx_fbenm.coefs.copy())
     return mxflx_fbenm.coefs.copy()
 
 
-def solve_dmf(react, prod, coefs, charge, mult, calc_factory, nmove, update_teval, tol, parallel, **overrides_template) -> DirectMaxFlux:
+def solve_dmf(react, prod, coefs, charge, mult, calc_factory, nmove, update_teval, tol, parallel, device, **overrides_template) -> DirectMaxFlux:
     ref_images = [react, prod]
-    mxflx = DirectMaxFlux(ref_images, coefs=coefs, nmove=nmove,
-                          update_teval=update_teval, parallel=parallel)
+
+    if device.lower() in ["gpu", "cuda", "torch"]:
+        from dmf.torch import DirectMaxFlux
+        mxflx = DirectMaxFlux(ref_images, coefs=coefs, nmove=nmove,
+                            update_teval=update_teval, parallel=parallel, device="cuda")
+    else:
+        from dmf import DirectMaxFlux
+        mxflx = DirectMaxFlux(ref_images, coefs=coefs, nmove=nmove,
+                            update_teval=update_teval, parallel=parallel)
+
     mxflx.add_ipopt_options({"output_file": "DMF_ipopt.out"})
 
     # parallel mode detection
@@ -277,6 +291,7 @@ def run_dmf(toml_path: str | Path):
     dmf_nmove = int(calcdata.get("dmf_nmove", 5))
     update_teval = bool(calcdata.get("update_teval", False))
     tol = calcdata.get("dmf_convergence", "tight")
+    device = calcdata.get("device", "cpu")
     parallel = bool(calcdata.get("parallel", False))
     assert isinstance(update_teval, bool), "update_teval must be boolean"
     assert isinstance(parallel, bool), "parallel must be boolean"
@@ -298,7 +313,7 @@ def run_dmf(toml_path: str | Path):
     # Generate initial path
     logger.info(f"Generating initial path: fbenm_nmove = {fbenm_nmove}.")
     coefs = generate_initial_path(react=react, prod=prod,
-                                  correlated=correlated, nmove=fbenm_nmove)
+                                  correlated=correlated, nmove=fbenm_nmove, device=device)
     logger.info("Initial path generation terminated normally.")
 
     # === Path optimization ===
@@ -310,7 +325,8 @@ def run_dmf(toml_path: str | Path):
         charge=charge, mult=mult,
         calc_factory=builder.make_calculator,
         nmove=dmf_nmove, update_teval=update_teval, tol=tol, 
-        parallel=parallel, **dmf_overrides_templt
+        parallel=parallel, **dmf_overrides_templt,
+        device=device
     )
 
     logger.info("Path optimization terminated normally.")

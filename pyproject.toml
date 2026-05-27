@@ -1,6 +1,6 @@
 [project]
 name = "lcrx"
-version = "0.1.1"
+version = "0.1.2"
 description = "LCRX: LocalColabReaction eXtended"
 readme = "README.md"
 license = { text = "MIT" }
@@ -18,7 +18,8 @@ dependencies = [
     "typer",
     "fairchem-core>=2.17",
     "sella>=2.4.2",
-    "pydmf"
+    "pydmf>=1.2.0",
+    "pydmf[torch]"
 ]
 
 [build-system]

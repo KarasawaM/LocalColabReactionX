@@ -172,6 +172,7 @@ def calculation_dmf():
     dmf_nmove = 20              # nmove for path optimization. default: 5.
     update_teval = false        # or true. default: false
     dmf_convergence = "tight"   # or "middle", "loose". default: "tight"
+    device = "cpu"              # device for FBENM and DMF: "cpu" or "gpu"
     ''')
 
 
@@ -179,6 +180,7 @@ def calculation_dmf_verbose():
     return textwrap.dedent('''\
     [calculation]
     type = "dmf"                # Direct MaxFlux calculation
+    device = "cpu"              # device for FBENM and DMF: "cpu" or "gpu"
 
     # --- initial path ---
     fbenm = "cfbenm"            # or "fbenm". "cfbenm" for correlated = true. default: "cfbenm"
